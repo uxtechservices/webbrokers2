@@ -1,6 +1,6 @@
 // Import Axios and Create
 export const production = import.meta.env.VITE_PRODUCTION_MODE;
-export const API = "https://trollopy-ephraim-hypoxanthic.ngrok-free.dev";
+export const API = (production == "true") ? import.meta.env.VITE_API_PRODUCTION : 'https://violet-worm-122014.hostingersite.com';
 
 import router from '@/router';
 import axios from 'axios';
