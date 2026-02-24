@@ -1,13 +1,17 @@
 // Import Axios and Create
 export const production = import.meta.env.VITE_PRODUCTION_MODE;
-export const API = (production == "true") ? import.meta.env.VITE_API_PRODUCTION : 'https://violet-worm-122014.hostingersite.com';
+export const API = (production == "true") ? import.meta.env.VITE_API_PRODUCTION : import.meta.env.VITE_API_DEVELOPMENT;
 
 import router from '@/router';
 import axios from 'axios';
 import { removeToken, removeUserData } from './authentication';
 
 const instance = axios.create({
-    baseURL: API,
+  baseURL: API,
+  headers: {
+      'ngrok-skip-browser-warning': 'true',
+      'Content-Type': 'application/json'
+  }
 });
 
 
