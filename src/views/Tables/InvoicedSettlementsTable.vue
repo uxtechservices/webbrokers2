@@ -1,6 +1,6 @@
 <template>
   <AdminLayout>
-    <TableBreadcrumb :pageTitle="currentPageTitle" :export="false"/>
+    <TableBreadcrumb :pageTitle="currentPageTitle" :export="false" :show_search_filters="true"/>
     <div class="space-y-5 sm:space-y-6">
         <SettlementTableOne :type="'Negocio pendiente por facturar'" :settlements="settlements" :count="totalItems" :liquidator="true"  :pdf_generator="false"  :export="false"/>
     </div>

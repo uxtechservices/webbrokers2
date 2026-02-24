@@ -4,9 +4,21 @@
       {{ pageTitle }}
     </h2>
     <nav class="flex gap-2 items-center">
-      <input v-model="agent" type="text" placeholder="Subagente o cliente" @input="filterByAgent"
-        class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-3 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
-      <select v-model="agency_filter" @change="filterByAgency"
+  <input 
+    v-if="show_search_filters"
+    v-model="agent" 
+    type="text" 
+    placeholder="Código subagente..." 
+    @input="filterByAgent"
+    class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-3 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+  <input 
+    v-if="show_search_filters"
+    v-model="client" 
+    type="text" 
+    placeholder="Nombre del cliente..." 
+    @input="filterByClient"
+    class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-3 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+  <select v-model="agency_filter" @change="filterByAgency"
         class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800">
         <option value="" selected>N/A</option>
         <option :value="agency.id" v-for="agency in agencies">{{ agency.nombre }}</option>
@@ -134,7 +146,7 @@ import type { AseguradoraTS } from '@/interfaces/AseguradoraTS';
 import type { SubsidiariaTS } from '@/interfaces/SubsidiariaTS';
 import { saveRows } from '@/libs/storage';
 
-const props = defineProps({ filter: { type: Boolean, default: true }, filter_payout_state: { type: Boolean, default: false }, export: { type: Boolean }, pageTitle: { type: String }, import: { type: Boolean, default: true }, create: { type: Boolean, default: true } });
+const props = defineProps({ filter: { type: Boolean, default: true }, filter_payout_state: { type: Boolean, default: false }, export: { type: Boolean }, pageTitle: { type: String }, import: { type: Boolean, default: true }, create: { type: Boolean, default: true }, show_search_filters: { type: Boolean, default: false } });
 const isImportModal = ref(false);
 const errorAlert = ref(false);
 const downloadingArchive = ref(false);
@@ -143,6 +155,7 @@ const excelData = ref([]);
 const clients = ref<ClienteTS[]>([])
 const type = ref("");
 const agent = ref("");
+const client = ref("");
 const agencies = ref<AseguradoraTS[]>([])
 const selectedAgency = ref<AseguradoraTS | null>(null);
 const subsidiaries = ref<SubsidiariaTS[]>([])
@@ -373,7 +386,9 @@ const filterByAgent = () => {
   event.emit('filter-by-agent', agent.value);
 }
 
-
+const filterByClient = () => {
+  event.emit('filter-by-client', client.value);
+}
 
 const excelSerialToDate = (serial: number): string => {
   const excelEpoch = new Date(1900, 0, 1); // 1 de enero de 1900

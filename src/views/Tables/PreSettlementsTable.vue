@@ -1,6 +1,6 @@
 <template>
   <AdminLayout>
-    <TableBreadcrumb :pageTitle="currentPageTitle" :export="false"/>
+    <TableBreadcrumb :pageTitle="currentPageTitle" :export="false" :show_search_filters="true"/>
     <div class="space-y-5 sm:space-y-6">
       <SettlementTableOne :type="'Pre Liquidacion'" :settlements="settlements" :liquidator="true" :count="totalItems" :pdf_generator="false"/>
     </div>

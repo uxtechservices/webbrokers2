@@ -243,6 +243,7 @@ const filter = ref("");
 const agency_filter = ref("");
 const subsidiary_filter = ref("");
 const person = ref("");
+const client_filter = ref("");
 const paginatedItems = ref<LiquidacionMappedTS[]>([]);
 const selectAll = ref(false);
 const selectedSettlements = ref<LiquidacionRowTS[]>([]);
@@ -288,6 +289,7 @@ onMounted(() => {
   event.on('filter-by-type', filterBySettlementType)
   event.on('filter-by-agency', filterByAgency)
   event.on('filter-by-agent', filterByAgent)
+  event.on('filter-by-client', filterByClient)
 })
 
 
@@ -346,6 +348,12 @@ const filterByAgent = async (newValue: string) => {
   await getSettlementList(currentPage.value, itemsPerPage.value);
 }
 
+const filterByClient = async (newValue: string) => {
+  client_filter.value = newValue;
+  currentPage.value = 1;
+  await getSettlementList(currentPage.value, itemsPerPage.value);
+}
+
 const filterByAgency = async (newValue: { agency: string, subsidiary?: string }) => {
   agency_filter.value = newValue.agency;
   subsidiary_filter.value = newValue.subsidiary ? newValue.subsidiary : "";
@@ -373,6 +381,8 @@ const getSettlements = async (page: number, limit: number, filters: SettlementFi
 
     // Filtros dinámicos
     if (filters.person) queryParams.append("person", filters.person);
+    if (filters.agent) queryParams.append("agent", filters.agent);
+    if (filters.client) queryParams.append("client", filters.client);
     if (filters.type) queryParams.append("type", filters.type);
     if (filters.agency) queryParams.append("agency", filters.agency);
     if (filters.subsidiary) queryParams.append("subsidiary", filters.subsidiary);
@@ -406,7 +416,8 @@ const getSettlementList = async (page: number, limit: number) => {
   if (filter.value === 'N/C') filters.liquidity = true;
   if (filter.value === 'Vida') filters.health = true;
 
-  if (person.value != '') filters.person = person.value;
+  if (person.value != '') filters.agent = person.value;
+  if (client_filter.value != '') filters.client = client_filter.value;
   if (filter.value != '') filters.type = filter.value;
   if (agency_filter.value != '') filters.agency = agency_filter.value;
   if (subsidiary_filter.value != '') filters.subsidiary = subsidiary_filter.value;
