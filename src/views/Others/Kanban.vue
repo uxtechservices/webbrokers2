@@ -409,6 +409,14 @@
                 class="w-24 text-end outline-none">
             </div>
           </div>
+          <div class="grid grid-cols-2 items-center">
+        <div class="dark:bg-white/[0.10] bg-gray-200 p-3 dark:text-white font-bold">
+          <p>PRÉSTAMOS</p>
+        </div>
+        <div class="p-1 dark:text-white text-end inline-flex items-center justify-between">$
+          <input type="number" min="0" v-model="clusterData.prestamo" class="w-24 text-end outline-none">
+        </div>
+        </div>
         </div>
         <button v-if="updatingLiquidation"
           class="bg-indigo-600 hover:bg-indigo-800 transition-colors duration-300 ease-in-out rounded-sm p-4 text-white text-center w-full">
@@ -498,6 +506,7 @@ const clusterData = ref({
   ret_iva: 0,
   ret_renta: 0,
   tarifa_comision: 0,
+  prestamo: 0,
   total_liquidado: 0,
   subagente: "",
   fecha_liquidacion: ""
@@ -690,6 +699,7 @@ const getClusterSettlements = async () => {
         clusterData.value.ret_iva = clusterRows.value[0].Finalizada?.ret_iva || 0;
         clusterData.value.ret_renta = clusterRows.value[0].Finalizada?.ret_renta || 0;
         clusterData.value.tarifa_comision = clusterRows.value[0].Finalizada?.tarifa_comision || 0;
+        clusterData.value.prestamo = clusterRows.value[0].Finalizada?.prestamo || 0;
         clusterData.value.FinalizadaNumeroLiquidacion = clusterRows.value[0].Finalizada?.numero_liquidacion || "0";
         clusterData.value.subagente = clusterRows.value[0].Subagente?.nombres || "" + clusterRows.value[0].Subagente?.apellidos || "";
         clusterData.value.total_liquidado = clusterRows.value[0].Finalizada?.total_liquidado || 0;
