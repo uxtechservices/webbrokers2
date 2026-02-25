@@ -283,7 +283,7 @@
               <div class="flex items-center gap-3">
                 <div>
                   <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                    {{ settlement.Finalizada?.tarifa_comision ?? clusterData.tarifa_comision }} %
+                    {{ settlement.tarifa_comision ?? settlement.Finalizada?.tarifa_comision ?? clusterData.tarifa_comision }} %
                   </span>
                 </div>
               </div>
@@ -292,7 +292,7 @@
               <div class="flex items-center gap-3">
                 <div>
                   <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                    {{ formatUSD(((settlement.comision || 0) * (settlement.Finalizada?.tarifa_comision ?? clusterData.tarifa_comision ?? 0)) / 100) }}
+                    {{ formatUSD(((settlement.comision || 0) * (settlement.tarifa_comision ?? settlement.Finalizada?.tarifa_comision ?? clusterData.tarifa_comision ?? 0)) / 100) }}
                   </span>
                 </div>
               </div>

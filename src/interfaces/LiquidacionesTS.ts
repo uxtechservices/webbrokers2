@@ -22,6 +22,7 @@ export interface LiquidacionTS {
   f_contab?: string;
   valor_prima?: number;
   comision?: number;
+  tarifa_comision?: number;
   ori?: string;
   F?: string;
   L?: string;
@@ -60,6 +61,7 @@ export interface LiquidacionMappedTS {
   f_contab?: string;
   valor_prima?: number;
   comision?: number;
+  tarifa_comision?: number;
   ori?: string;
   F?: string;
   L?: string;
